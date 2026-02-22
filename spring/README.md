@@ -1,6 +1,6 @@
-# valify-spring-boot — Spring Boot Integration
+# validy-spring-boot — Spring Boot Integration
 
-Zero-magic Spring Boot integration for Valify. No annotation processors,
+Zero-magic Spring Boot integration for Validy. No annotation processors,
 no AOP, no classpath scanning. Everything is explicit.
 
 ---
@@ -8,8 +8,8 @@ no AOP, no classpath scanning. Everything is explicit.
 ## How It Works (the full picture in 4 lines)
 
 1. You declare a `ValidatorRegistry` `@Bean` listing your validators explicitly.
-2. Auto-configuration detects the registry and creates a `ValifyValidator` bean.
-3. `ValifyValidator` implements Spring's `Validator` SPI — Spring MVC already knows how to use it.
+2. Auto-configuration detects the registry and creates a `ValidyValidator` bean.
+3. `ValidyValidator` implements Spring's `Validator` SPI — Spring MVC already knows how to use it.
 4. `@Valid` / `@Validated` on `@RequestBody` parameters triggers it automatically.
 
 That's it. No other annotations, no proxies, no reflection on your domain objects.
@@ -21,15 +21,15 @@ That's it. No other annotations, no proxies, no reflection on your domain object
 ### Dependency (Maven)
 ```xml
 <dependency>
-    <groupId>io.valify</groupId>
-    <artifactId>valify-spring-boot</artifactId>
+    <groupId>io.validy</groupId>
+    <artifactId>validy-spring-boot</artifactId>
     <version>1.0.0</version>
 </dependency>
 ```
 
 ### Gradle
 ```kotlin
-implementation("io.valify:valify-spring-boot:1.0.0")
+implementation("io.validy:validy-spring-boot:1.0.0")
 ```
 
 ---
@@ -55,7 +55,7 @@ class AppValidators {
 
 ```java
 @Configuration
-class ValifyConfig {
+class ValidyConfig {
 
     @Bean
     ValidatorRegistry validatorRegistry() {
@@ -89,7 +89,7 @@ HTTP 422 Unprocessable Entity
 Content-Type: application/problem+json
 
 {
-  "type":   "https://valify.io/problems/validation-error",
+  "type":   "https://validy.io/problems/validation-error",
   "title":  "Validation Failed",
   "status": 422,
   "detail": "2 constraint(s) violated",
@@ -102,23 +102,23 @@ Content-Type: application/problem+json
 
 ---
 
-## Using Both Valify and Hibernate Validator
+## Using Both Validy and Hibernate Validator
 
-If you want Bean Validation annotations (`@NotNull`, `@Size`, etc.) *and* Valify
+If you want Bean Validation annotations (`@NotNull`, `@Size`, etc.) *and* Validy
 rules to both run, replace the `WebMvcConfigurer` with a delegating validator:
 
 ```java
 @Bean
-WebMvcConfigurer valifyMvcConfigurer(
-    ValifyValidator valifyValidator,
+WebMvcConfigurer validyMvcConfigurer(
+    ValidyValidator validyValidator,
     javax.validation.Validator beanValidator
 ) {
     return new WebMvcConfigurer() {
         @Override
         public Validator getValidator() {
-            // Run Valify first, then Hibernate — errors from both are collected
+            // Run Validy first, then Hibernate — errors from both are collected
             return new CompositeValidator(
-                valifyValidator,
+                validyValidator,
                 new SpringValidatorAdapter(beanValidator)
             );
         }
@@ -130,7 +130,7 @@ WebMvcConfigurer valifyMvcConfigurer(
 
 ## Validating Outside Controllers (service layer, batch jobs, tests)
 
-Valify validators are plain objects — just call `.validate()` directly:
+Validy validators are plain objects — just call `.validate()` directly:
 
 ```java
 @Service
@@ -155,8 +155,8 @@ No Spring context needed. Validators are fully unit-testable in isolation.
 
 | Does | Does Not |
 |------|----------|
-| Create `ValifyValidator` if `ValidatorRegistry` bean exists | Touch anything if no registry is defined |
-| Register Valify as Spring MVC's default validator | Override a `WebMvcConfigurer` you've already defined |
+| Create `ValidyValidator` if `ValidatorRegistry` bean exists | Touch anything if no registry is defined |
+| Register Validy as Spring MVC's default validator | Override a `WebMvcConfigurer` you've already defined |
 | Translate `MethodArgumentNotValidException` to RFC 7807 | Register `ValidationExceptionHandler` automatically (you opt in) |
 
 All conditions use `@ConditionalOnBean` / `@ConditionalOnMissingBean` — your

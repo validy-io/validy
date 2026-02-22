@@ -7,7 +7,7 @@ subprojects {
 
     apply(plugin = "java-library")
 
-    group   = "io.valify"
+    group   = "io.validy"
     version = "1.0.0"
 
     repositories {

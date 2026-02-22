@@ -20,7 +20,7 @@ dependencies {
     // No versions needed on any spring-* or jakarta-* dependency below.
     api(platform("org.springframework.boot:spring-boot-dependencies:4.0.0"))
 
-    // ── Valify core ───────────────────────────────────────────────────────────
+    // ── Validy core ───────────────────────────────────────────────────────────
     api(project(":core"))
 
     // ── Spring Boot autoconfigure ─────────────────────────────────────────────
@@ -32,7 +32,7 @@ dependencies {
     compileOnly("org.springframework:spring-webmvc")
 
     // ── Jakarta Validation 3.1 (EE 11 baseline shipped with Boot 4) ──────────
-    // Optional — only needed if you want Bean Validation interop alongside Valify.
+    // Optional — only needed if you want Bean Validation interop alongside Validy.
     compileOnly("jakarta.validation:jakarta.validation-api")
 
     // ── Tests ─────────────────────────────────────────────────────────────────

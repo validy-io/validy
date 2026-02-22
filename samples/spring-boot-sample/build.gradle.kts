@@ -9,12 +9,12 @@ repositories {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(24)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
 dependencies {
-    // ── Valify ────────────────────────────────────────────────────────────────
+    // ── Validy ────────────────────────────────────────────────────────────────
     implementation(project(":core"))
     implementation(project(":spring"))
 

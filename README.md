@@ -1,4 +1,4 @@
-# Valify — Elegant Validation for Java 24
+# Validy — Elegant Validation for Java 24
 
 A composable, readable validation library built with modern Java idioms:
 sealed types, records, pattern matching, and functional interfaces.
@@ -174,8 +174,8 @@ if (result.isValid()) { ... }
 ## Project Structure
 
 ```
-io.valify/
-├── Valify.java              ← Static façade (single import)
+io.validy/
+├── Validy.java              ← Static façade (single import)
 ├── core/
 │   ├── Rule.java            ← Functional interface + combinators
 │   └── Validator.java       ← Fluent builder
@@ -190,7 +190,7 @@ io.valify/
 
 ---
 
-## Extending Valify
+## Extending Validy
 
 To add a new rule category, just write a class with static factory methods
 returning `Rule<YourType>`:
