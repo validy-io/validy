@@ -1,0 +1,67 @@
+### Create a valid user
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "Alice Dupont",
+  "email": "alice@example.com",
+  "age": 30,
+  "password": "P@ssw0rd!",
+  "confirmPassword": "P@ssw0rd!",
+  "address": {
+    "street": "10 Main St",
+    "city": "Austin",
+    "zip": "78701"
+  },
+  "roles": ["USER"]
+}
+
+> {% client.global.set("userId", response.body.id) %}
+
+###
+
+### Create an invalid user — triggers validation errors
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "not-an-email",
+  "age": -1,
+  "password": "weak",
+  "confirmPassword": "different",
+  "address": {
+    "street": "",
+    "city": "Austin",
+    "zip": "bad-zip"
+  },
+  "roles": []
+}
+
+###
+
+### Get all users
+GET http://localhost:8080/users
+
+###
+
+### Get user by ID (run "Create a valid user" first)
+GET http://localhost:8080/users/{{userId}}
+
+###
+
+### Update user (run "Create a valid user" first)
+PUT http://localhost:8080/users/{{userId}}
+Content-Type: application/json
+
+{
+  "name": "Alice Smith",
+  "email": "alice.smith@example.com"
+}
+
+###
+
+### Delete user (run "Create a valid user" first)
+DELETE http://localhost:8080/users/{{userId}}
+
+###
