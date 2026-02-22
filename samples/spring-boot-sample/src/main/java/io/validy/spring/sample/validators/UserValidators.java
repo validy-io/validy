@@ -7,6 +7,7 @@ import io.validy.core.Rule;
 import io.validy.core.Validator;
 import io.validy.core.result.ValidationResult;
 
+import static io.validy.core.Validy.*;
 import static io.validy.core.rules.StringRules.matches;
 import static io.validy.core.rules.StringRules.minLength;
 
@@ -67,7 +68,7 @@ public final class UserValidators {
             .field("email",    CreateUserRequest::email,    notBlank(), email())
             .field("age",      CreateUserRequest::age,      between(18, 120))
             .field("password", CreateUserRequest::password, strongPassword())
-            .field("roles",    CreateUserRequest::roles,    notEmpty(), maxSize(5))
+            .field("roles",    CreateUserRequest::roles,    notEmpty(), maxSize(5), eachElement(knownRole()))
 
             // Cross-field: passwords must match
             .rule(r -> r.password().equals(r.confirmPassword())
